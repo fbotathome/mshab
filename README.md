@@ -111,7 +111,7 @@ env = gym.make(
     sim_backend="gpu",
     robot_uids="fetch",
     control_mode="pd_joint_delta_pos",
-    # Rendering argsa
+    # Rendering args
     reward_mode="normalized_dense",
     render_mode="rgb_array",
     shader_dir="minimal",
@@ -122,7 +122,7 @@ env = gym.make(
     scene_builder_cls=plan_data.dataset,
     # SubtaskTrain args
     spawn_data_fp=spawn_data_fp,
-    # optional: additioanl env_kwargs
+    # optional: additional env_kwargs
 )
 
 # add env wrappers here
@@ -138,7 +138,7 @@ venv = ManiSkillVectorEnv(
 
 ### Training
 
-To run SAC, PPO, BC and Diffusion Policy training with default hyperparamters, you can run
+To run SAC, PPO, BC and Diffusion Policy training with default hyperparameters, you can run
 
 ```bash
 bash scripts/train_[algo].sh
@@ -146,7 +146,7 @@ bash scripts/train_[algo].sh
 
 Each `scripts/train_[algo].sh` file also contains additional examples for running and changing hyperparameters.
 
-Default train configs are located under `configs/`. If you have the checkpoints downloaded, you can train using the same hyperparemters using the included train configs by running the following:
+Default train configs are located under `configs/`. If you have the checkpoints downloaded, you can train using the same hyperparameters using the included train configs by running the following:
 ```bash
 python -m mshab.train_[algo] \
   [path-to-checkpoint-cfg]
@@ -191,6 +191,6 @@ Please note that evaluating with teleport nav is currently much slower than eval
 
 ## Feature Requests, Bugs, Questions etc
 
-If you have any feature requests find any bugs, or have any questions, please open up an issue or contact us! We're happy to incorporate fixes and changes to improve users' experience. We'll continue to provide updates and improvements to MS-HAB (especially since ManiSkill3 is still in Beta).
+If you have any feature requests, find any bugs, or have any questions, please open up an issue or contact us! We're happy to incorporate fixes and changes to improve users' experience. We'll continue to provide updates and improvements to MS-HAB (especially since ManiSkill3 is still in Beta).
 
 We hope our environments, baselines, and dataset are useful to the community!
