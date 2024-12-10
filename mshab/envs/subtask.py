@@ -70,6 +70,7 @@ class SubtaskTrainEnv(SequentialTaskEnv):
 
     def _after_reconfigure(self, options):
         self.spawn_data = torch.load(self.spawn_data_fp, map_location=self.device)
+        self.spawn_selection_idxs = [None] * self.num_envs
         return super()._after_reconfigure(options)
 
     def _initialize_episode(self, env_idx, options: Dict):
@@ -81,7 +82,8 @@ class SubtaskTrainEnv(SequentialTaskEnv):
             spawn_selection_idxs = options.get(
                 "spawn_selection_idxs", [None] * env_idx.numel()
             )
-            for subtask_uid, spawn_selection_idx in zip(
+            for env_num, subtask_uid, spawn_selection_idx in zip(
+                env_idx,
                 [
                     current_subtask.composite_subtask_uids[env_num]
                     for env_num in env_idx
@@ -94,7 +96,9 @@ class SubtaskTrainEnv(SequentialTaskEnv):
                         spawn_selection_idx = torch.randint(
                             low=0, high=len(v), size=(1,)
                         )
+                        self.spawn_selection_idxs[env_num] = spawn_selection_idx.item()
                     elif isinstance(spawn_selection_idx, int):
+                        self.spawn_selection_idxs[env_num] = spawn_selection_idx
                         spawn_selection_idx = [spawn_selection_idx]
                     batched_spawn_data[k].append(v[spawn_selection_idx])
             for k, v in batched_spawn_data.items():

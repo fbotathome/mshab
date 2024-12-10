@@ -75,6 +75,7 @@ def make_env(scene_builder_cls) -> SceneManipulationEnv:
         "SceneManipulation-v1",
         num_envs=1,
         sim_backend="cpu",
+        render_backend="cpu",
         reconfiguration_freq=0,
         # scene manip kwargs
         scene_builder_cls=scene_builder_cls,
@@ -259,8 +260,8 @@ def gen_pick_spawn_data(
                 env.scene.step()
 
                 robot_force = robot_force + env.agent.robot.get_net_contact_forces(
-                    env.agent.robot_link_ids
-                ).norm(dim=-1)
+                    env.agent.robot_link_names
+                ).norm(dim=-1).sum(dim=-1)
                 total_agent_contacts += num_agent_contacts(env.scene.get_contacts())
 
             if (
@@ -452,9 +453,11 @@ def gen_place_spawn_data(
             total_agent_contacts = 0
             for _ in range(args.init_check_scene_steps):
                 env.scene.step()
-                rforce = env.agent.robot.get_net_contact_forces(
-                    env.agent.robot_link_ids
-                ).norm(dim=-1)
+                rforce = (
+                    env.agent.robot.get_net_contact_forces(env.agent.robot_link_names)
+                    .norm(dim=-1)
+                    .sum(dim=-1)
+                )
                 if robot_force is None:
                     robot_force = rforce
                 else:
@@ -652,8 +655,8 @@ def gen_open_spawn_data(
                 env.scene.step()
 
                 robot_force = robot_force + env.agent.robot.get_net_contact_forces(
-                    env.agent.robot_link_ids
-                ).norm(dim=-1)
+                    env.agent.robot_link_names
+                ).norm(dim=-1).sum(dim=-1)
                 total_agent_contacts += num_agent_contacts(env.scene.get_contacts())
 
             if (
@@ -850,8 +853,8 @@ def gen_close_spawn_data(
                 env.scene.step()
 
                 robot_force = robot_force + env.agent.robot.get_net_contact_forces(
-                    env.agent.robot_link_ids
-                ).norm(dim=-1)
+                    env.agent.robot_link_names
+                ).norm(dim=-1).sum(dim=-1)
                 total_agent_contacts += num_agent_contacts(env.scene.get_contacts())
 
             if (
@@ -983,7 +986,7 @@ def main():
     )
     os.makedirs(output_dir, exist_ok=True)
 
-    torch.save(subtask_uid_to_spawn_data, output_dir / "spawn_data_redo.pt")
+    torch.save(subtask_uid_to_spawn_data, output_dir / f"spawn_data.pt")
 
     print("finished in", time.time() - stime, "seconds")
 

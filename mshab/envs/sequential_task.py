@@ -638,10 +638,13 @@ class SequentialTaskEnv(SceneManipulationEnv):
         ), f"These task plans cover {num_bcis} build configs, but received {self.num_envs} envs. Either change the task plan list, change num_envs, or set require_build_configs_repeated_equally_across_envs=False. Note if require_build_configs_repeated_equally_across_envs=False and num_envs % num_build_configs != 0, then a) if num_envs > num_build_configs, then some build configs might be built in more parallel envs than others (meaning associated task plans will be sampled more frequently), and b) if num_envs < num_build_configs, then some build configs might not be built at all (meaning associated task plans will not be used)."
 
         # if num_bcis < self.num_envs, repeat bcis and truncate at self.num_envs
-        self.build_config_idxs: List[int] = np.repeat(
-            sorted(list(self.build_config_idx_to_task_plans.keys())),
-            np.ceil(self.num_envs / num_bcis),
-        )[: self.num_envs].tolist()
+        self.build_config_idxs: List[int] = options.get(
+            "build_config_idxs",
+            np.repeat(
+                sorted(list(self.build_config_idx_to_task_plans.keys())),
+                np.ceil(self.num_envs / num_bcis),
+            )[: self.num_envs].tolist(),
+        )
         self.num_task_plans_per_bci = torch.tensor(
             [
                 len(self.build_config_idx_to_task_plans[bci])

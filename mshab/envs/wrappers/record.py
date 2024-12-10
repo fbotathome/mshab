@@ -564,6 +564,10 @@ class RecordEpisode(gym.Wrapper):
                 episode_info = dict(
                     episode_id=self._episode_id,
                     episode_seed=NoIndent(self.base_env._episode_seed.tolist()),
+                    build_config_idx=self.base_env.build_config_idxs[env_idx],
+                    task_plan_idx=self.base_env.task_plan_idxs[env_idx].item(),
+                    init_config_idx=self.base_env.init_config_idxs[env_idx],
+                    spawn_selection_idx=self.base_env.spawn_selection_idxs[env_idx],
                     control_mode=self.base_env.control_mode,
                     elapsed_steps=end_ptr - start_ptr - 1,
                     **episode_info,
