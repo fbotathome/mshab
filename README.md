@@ -2,8 +2,7 @@
 
 _A Benchmark for Low-Level Manipulation in Home Rearrangement Tasks_
 
-<video src="https://github.com/user-attachments/assets/133e86e0-c355-412e-8fec-00bb908e53c5" width="100%">
-</video>
+<a href="https://arth-shukla.github.io/mshab/"><img src="./assets/teaser.jpg" width="100%" /></a>
 
 
 
@@ -106,7 +105,7 @@ spawn_data_fp = REARRANGE_DIR / "spawn_data" / task / subtask / split / "spawn_d
 env = gym.make(
     f"{subtask.capitalize()}SubtaskTrain-v0",
     # Simulation args
-    num_envs=256,
+    num_envs=252,  # RCAD has 63 train scenes, so 252 envs -> 4 parallel envs reserved for each scene
     obs_mode="rgbd",
     sim_backend="gpu",
     robot_uids="fetch",

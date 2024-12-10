@@ -214,7 +214,7 @@
         </div>
       </div>
 
-      <div class="gpu-sim-media-item" style="margin-top: 30px;">
+      <div class="gpu-sim-media-item">
         <video poster="" id="zoom-out-video" autoplay preload muted loop playsinline style="width: 100%;">
           <!-- Your video here -->
           <source id="zoom-out-video-source" src="static/videos/mshab_zoom_outs.mp4" type="video/mp4">
@@ -232,11 +232,20 @@
       </h2>
       <p class="video-presentation__text">
         To solve the HAB's long-horizon tasks (TidyHouse, PrepareGroceries, SetTable), MS-HAB chains individual skill policies (Pick, Place, Open, and Close). For each skill, MS-HAB provides extensive reinforcement learning (RL) and imitation learning (IL) baselines which use whole-body control, i.e. manipulation and navigation performed simultaneously.
+
+        <br /><br /><br />
+
+        <video poster="" id="rollouts-video" autoplay preload muted loop playsinline height="100%">
+          <!-- Your video here -->
+          <source id="rollouts-video-source" src="static/videos/mshab_rollouts.mp4" type="video/mp4">
+        </video>
+
+        <br /><br />
+
+        We find that, despite signficant tuning, our baselines are unable to solve the MS-HAB tasks. In particular, individual subtask success rate (Pick, Place, Open, and Close) all leave signficiant room for improvement. This indicates our task is not yet saturated, and there is room for future work to improve performance.
+
+        <div style="border: 1px solid rgb(120,120,120); border-radius: 24px;"><img src="static/images/mshab_progressive_completion_rates.jpg" alt=" " style="width: 100%; padding: 10px;" /></div>
       </p>
-      <video poster="" id="rollouts-video" autoplay preload muted loop playsinline height="100%">
-        <!-- Your video here -->
-        <source id="rollouts-video-source" src="static/videos/mshab_rollouts.mp4" type="video/mp4">
-      </video>
     </div>
   </section>
   <!-- End  Video Presentation -->
