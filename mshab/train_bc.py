@@ -187,7 +187,7 @@ class BCDataset(ClosableDataset):
             else:
                 assert trajs_per_obj <= len(
                     json_file["episodes"]
-                ), f"got trajs_per_obj={trajs_per_obj} but only have {len(json_file['episodes'])} for data for obj={self.obj_names_in_loaded_order[file_idx]}"
+                ), f"got {trajs_per_obj=} but only have {len(json_file['episodes'])} for data for obj={self.obj_names_in_loaded_order[file_idx]}"
                 use_ep_jsons = random.sample(json_file["episodes"], k=trajs_per_obj)
 
             for ep_json in use_ep_jsons:

@@ -461,7 +461,7 @@ def gen_open_task_plans(scene_builder):
                     break
             else:
                 raise AttributeError(
-                    f"Couldn't find marker for articulation link: base_articulation_id={base_articulation_id} link_num={link_num} marker_link_name={marker_link_name}"
+                    f"Couldn't find marker for articulation link: {base_articulation_id=} {link_num=} {marker_link_name=}"
                 )
 
             task_plans.append(
@@ -563,7 +563,7 @@ def gen_close_task_plans(scene_builder):
                     break
             else:
                 raise AttributeError(
-                    f"Couldn't find marker for articulation link: base_articulation_id={base_articulation_id} link_num={link_num} marker_link_name={marker_link_name}"
+                    f"Couldn't find marker for articulation link: {base_articulation_id=} {link_num=} {marker_link_name=}"
                 )
 
             task_plans.append(

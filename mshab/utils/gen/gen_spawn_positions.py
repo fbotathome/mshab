@@ -150,7 +150,7 @@ def gen_pick_spawn_data(
                 min_open_qpos_frac = 0.9
             else:
                 raise NotImplementedError(
-                    f"subtask.articulation_config.articulation_type={subtask.articulation_config.articulation_type} not supported"
+                    f"{subtask.articulation_config.articulation_type=} not supported"
                 )
             spawn_articulation_qpos = []
             spawn_obj_raw_pose = []
@@ -566,9 +566,7 @@ def gen_open_spawn_data(
             ymin = -0.6
             ymax = 0.6
         else:
-            raise NotImplementedError(
-                f"subtask.articulation_type={subtask.articulation_type} not supported"
-            )
+            raise NotImplementedError(f"{subtask.articulation_type=} not supported")
 
         xmin = (subtask_articulation_sapien_pose * sapien.Pose(p=[xmin, 0, 0])).p[0]
         xmax = (subtask_articulation_sapien_pose * sapien.Pose(p=[xmax, 0, 0])).p[0]
@@ -738,9 +736,7 @@ def gen_close_spawn_data(
             ymax = 0.6
             min_open_qpos_frac = 0.9
         else:
-            raise NotImplementedError(
-                f"subtask.articulation_type={subtask.articulation_type} not supported"
-            )
+            raise NotImplementedError(f"{subtask.articulation_type=} not supported")
 
         xmin = (subtask_articulation_sapien_pose * sapien.Pose(p=[xmin, 0, 0])).p[0]
         xmax = (subtask_articulation_sapien_pose * sapien.Pose(p=[xmax, 0, 0])).p[0]

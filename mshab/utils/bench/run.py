@@ -237,9 +237,7 @@ def interact_bench():
         )
 
     print("=" * 100)
-    print(
-        f"interact_bench seed={args.seed} num_envs={args.num_envs} horizon=200 total_steps=200"
-    )
+    print(f"interact_bench {args.seed=} {args.num_envs=} horizon=200 total_steps=200")
 
     timer.end("other")
     envs.reset()

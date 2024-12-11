@@ -732,7 +732,7 @@ class SequentialTaskEnv(SceneManipulationEnv):
 
         assert torch.all(
             torch.tensor(self.build_config_idxs) == torch.tensor(build_config_idxs)
-        ), f"Please pass the same task plan list when creating this env as was used in this state dict; currently built build_config_idxs={self.build_config_idxs}, state dict build_config_idxs={build_config_idxs}"
+        ), f"Please pass the same task plan list when creating this env as was used in this state dict; currently built {self.build_config_idxs=}, state dict {build_config_idxs=}"
 
         self._initialize_episode(
             torch.arange(self.num_envs), options=dict(task_plan_idxs=task_plan_idxs)
@@ -740,7 +740,7 @@ class SequentialTaskEnv(SceneManipulationEnv):
 
         assert torch.all(
             torch.tensor(self.init_config_idxs) == torch.tensor(init_config_idxs)
-        ), f"Please pass the same task plan list when creating this env as was used in this state dict; currently init'd init_config_idxs={self.init_config_idxs}, state dict init_config_idxs={init_config_idxs}"
+        ), f"Please pass the same task plan list when creating this env as was used in this state dict; currently init'd {self.init_config_idxs=}, state dict {init_config_idxs=}"
 
         self.subtask_pointer = state_dict.get("subtask_pointer")
         self.subtask_steps_left = state_dict.get("subtask_steps_left")
@@ -1052,7 +1052,7 @@ class SequentialTaskEnv(SceneManipulationEnv):
             )
         else:
             raise NotImplementedError(
-                f"place_cfg.goal_type={self.place_cfg.goal_type} is not yet supported"
+                f"{self.place_cfg.goal_type=} is not yet supported"
             )
         if check_progressive_completion:
             return obj_at_goal, dict(obj_at_goal=obj_at_goal)

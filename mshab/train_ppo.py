@@ -282,7 +282,7 @@ def train(cfg: TrainConfig):
         if global_step > cfg.algo.total_timesteps:
             break
 
-        logger.print(f"Epoch: {iteration}, global_step={global_step}", flush=True)
+        logger.print(f"Epoch: {iteration}, {global_step=}", flush=True)
         final_values = torch.zeros(
             (cfg.algo.num_steps, cfg.algo.num_envs), device=device
         )

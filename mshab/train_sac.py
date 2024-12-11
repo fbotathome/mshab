@@ -346,9 +346,7 @@ def train(cfg: TrainConfig):
         )
         log_alpha_optimizer.load_state_dict(checkpoint["log_alpha_optimizer"])
 
-        logger.print(
-            f"Sucessfully loaded {cfg.model_ckpt}, resuming={resuming}", flush=True
-        )
+        logger.print(f"Sucessfully loaded {cfg.model_ckpt}, {resuming=}", flush=True)
     print("new_log_alpha", log_alpha, flush=True)
 
     # -------------------------------------------------------------------------------------------------
@@ -416,7 +414,7 @@ def train(cfg: TrainConfig):
         if global_step > cfg.algo.total_timesteps:
             break
 
-        logger.print(f"Epoch: {iteration}, global_step={global_step}", flush=True)
+        logger.print(f"Epoch: {iteration}, {global_step=}", flush=True)
 
         if not resuming and len(replay_buffer) < cfg.algo.init_steps:
             action = envs.action_space.sample()

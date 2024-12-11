@@ -82,9 +82,7 @@ def eval(
         subtask = _override_task_plan_fp_path.parent.parent.stem
         obj_name = _override_task_plan_fp_path.stem
     if SAVE_GRASP_POSE:
-        assert (
-            subtask == "pick"
-        ), f"{subtask} should be pick when SAVE_GRASP_POSE={SAVE_GRASP_POSE}"
+        assert subtask == "pick", f"{subtask} should be pick when {SAVE_GRASP_POSE=}"
     SUBTASKS = [subtask]
 
     print("Generating data with the following args...")
@@ -399,7 +397,7 @@ def eval(
         if diff > 0:
             pbar.update(diff)
 
-        pbar.set_description(f"step_num={step_num}")
+        pbar.set_description(f"{step_num=}")
 
     while not check_done():
         still_running = subtask_type <= 2
@@ -435,9 +433,7 @@ def eval(
     # PRINT RESULTS
     # -------------------------------------------------------------------------------------------------
     if SAVE_GRASP_POSE:
-        print(
-            f"num_success_qposes={len(success_qposes)}, num_success_obj_raw_poses_wrt_tcp={len(success_obj_raw_poses_wrt_tcp)}"
-        )
+        print(f"{len(success_qposes)=}, {len(success_obj_raw_poses_wrt_tcp)=}")
 
     results_logs = dict(
         num_trajs=len(eval_envs.return_queue),

@@ -970,7 +970,7 @@ def eval(cfg: EvalConfig):
         if diff > 0:
             pbar.update(diff)
 
-        pbar.set_description(f"step={step_num}")
+        pbar.set_description(f"{step_num=}")
 
     def update_fail_subtask_counts(done):
         if torch.any(done):
