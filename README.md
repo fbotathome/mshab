@@ -10,7 +10,7 @@ Official repository for the ManiSkill-HAB project by
 
 [Arth Shukla](https://arth.website/), [Stone Tao](https://stoneztao.com/), [Hao Su](https://cseweb.ucsd.edu/~haosu/)
 
-**[Paper TBA]()** | **[Website](https://arth-shukla.github.io/mshab/)** | **[Models](https://huggingface.co/arth-shukla/mshab_checkpoints)** | **[Dataset TBA]()** | **[Supplementary](https://sites.google.com/view/maniskill-hab)**
+**[Paper TBA]()** | **[Website](https://arth-shukla.github.io/mshab/)** | **[Models](https://huggingface.co/arth-shukla/mshab_checkpoints)** | **[Dataset](https://arth-shukla.github.io/mshab/#dataset-section)** | **[Supplementary](https://sites.google.com/view/maniskill-hab)**
 
 
 ## Setup and Installation
@@ -41,29 +41,32 @@ Official repository for the ManiSkill-HAB project by
     import mshab.envs
     ```
 
-2. **[Optional] Checkpoints, Dataset, and Data Generation**
+1. **[Optional] Checkpoints, Dataset, and Data Generation**
 
-    To generate data, first make sure you have the envs installed (above). Then, you will need to download our pretrained policies:
+    The [model checkpoints](https://huggingface.co/arth-shukla/mshab_checkpoints) and [dataset](https://arth-shukla.github.io/mshab/#dataset-section) are all available on HuggingFace. Since the full dataset is quite large (~490GB total), it is recommended to use faster download methods appropriate for your system provided on the [HuggingFace documentation](https://huggingface.co/docs/huggingface_hub/en/guides/download).
     ```bash
     huggingface-cli login   # in case not already authenticated
-    huggingface-cli download arth-shukla/mshab_checkpoints --local-dir mshab_checkpoints
-    ```
-  
-    While the dataset is not yet available for download, you can generate the data with trajectory filtering by running the following. However, please note that the full dataset can take up ~490GB (after compression). One can speed up data generation by reducing compression requirements (compression and writing are the main bottlenecks), but this will increase the dataset storage requirements.
-    ```bash
-    bash scripts/gen_dataset.sh
-    ```
-  
-    You can also edit `mshab/utils/label_dataset.py` to use custom criteria for filtering the dataset (e.g. stricter collision requirements, allow failure data for RL, etc).
 
-3. **[Optional] Training Dependencies**
+    # Checkpoints
+    huggingface-cli download arth-shukla/mshab_checkpoints --local-dir mshab_checkpoints
+
+    # Dataset (see HuggingFace documentation for faster download options depending on your system)
+    export MSHAB_DATASET_DIR="$MS_ASSET_DIR/scene_datasets/replica_cad_dataset/rearrange-dataset"
+    huggingface-cli download arth-shukla/MS-HAB-TidyHouse --local-dir "$MSHAB_DATASET_DIR/tidy_house"
+    huggingface-cli download arth-shukla/MS-HAB-PrepareGroceries --local-dir "$MSHAB_DATASET_DIR/prepare_groceries"
+    huggingface-cli download arth-shukla/MS-HAB-SetTable --local-dir "$MSHAB_DATASET_DIR/set_table"
+    ```
+  
+    Users can also generate the data with trajectory filtering by running the provided data generation script `bash scripts/gen_dataset.sh`; this option may be faster depending on connection speed and system bandwidth. Users can use custom trajectory filtering criteria by editing `mshab/utils/label_dataset.py` (e.g. stricter collision requirements, allow failure data for RL, etc).
+
+1. **[Optional] Training Dependencies**
 
     To install dependencies for train scripts, simply install the extra dependencies as follows:
     ```bash
     pip install -e .[train]
     ```
 
-4. **[Optional] Dev Dependencies**
+1. **[Optional] Dev Dependencies**
 
     If you'd like to contribute, please run the following to install necessary formatting and testing dependencies:
     ```bash

@@ -19,7 +19,41 @@ $(document).ready(function () {
 	bulmaSlider.attach();
 	document.getElementById('copyButton').addEventListener('click', copyText);
 
+	// Add scroll handler for tables
+	const tables = document.querySelectorAll('table');
+	tables.forEach(table => {
+		updateTableShadows(table);
+		table.addEventListener('scroll', () => updateTableShadows(table));
+	});
 })
+
+function updateTableShadows(table) {
+	const maxScroll = table.scrollWidth - table.clientWidth;
+	const scrollLeft = table.scrollLeft;
+	
+	let background = [];
+	
+	// Add left shadow if not at start
+	if (scrollLeft > 0) {
+		background.push('radial-gradient(50% 50% at 0 50%, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0))');
+	}
+	
+	// Add right shadow if not at end
+	if (scrollLeft < maxScroll) {
+		background.push('radial-gradient(50% 50% at 100% 50%, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0)) 100% 0');
+	}
+	
+	// Always maintain the white gradients for smooth transitions
+	background.unshift(
+		'linear-gradient(to right, white 30%, rgba(255, 255, 255, 0))',
+		'linear-gradient(to right, rgba(255, 255, 255, 0), white 70%) 100% 0'
+	);
+	
+	table.style.background = background.join(',');
+	table.style.backgroundRepeat = 'no-repeat';
+	table.style.backgroundSize = '60px 100%';
+	table.style.backgroundAttachment = 'local, local, scroll, scroll';
+}
 
 const copyText = () => {
 	const text = `@article{taomaniskill3,
@@ -32,7 +66,8 @@ const copyText = () => {
 	navigator.clipboard.writeText(text).then(() => {
 		const messageDiv = document.getElementById('message');
 		messageDiv.textContent = 'Copied to clipboard';
-		messageDiv.style.color = 'green';
+		messageDiv.style.color = '#5a5aFa';
+		messageDiv.style.paddingRight = '10px';
 
 		setTimeout(() => {
 			messageDiv.textContent = '';

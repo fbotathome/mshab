@@ -77,11 +77,11 @@
             <div class="element__link flex-wrap" style="width: 100% !important;">
               <!-- Paper PDF link -->
               <span class="link-block">
-                <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank" class="  ">
+                <a href="https://arxiv.   /pdf/<ARXIV PAPER ID>.pdf" target="_blank" class="  ">
                   <span class="">
                     <img src="static/svg/Icon-paper.svg" alt="SVG" width="16px" height="16px">
                   </span>
-                  <span>Paper (TBA)</span>
+                  <span>Paper (arXiv TBA)</span>
                   <!-- TODO (arth): Add paper link -->
                 </a>
               </span>
@@ -110,11 +110,11 @@
 
               <!-- Dataset link -->
               <span class="link-block">
-                <a href="" class="  ">
+                <a href="#dataset-section" class="  ">
                   <span class="">
                     <img src="static/svg/Icon-data.svg" alt="SVG" width="16px" height="16px">
                   </span>
-                  <span>Dataset (TBA)</span>
+                  <span>Dataset</span>
                   <!-- TODO (arth): Upload dataset and add link -->
                 </a>
               </span>
@@ -209,7 +209,7 @@
             <br /><br />
             MS-HAB environments support realistic low-level control for successful grasping, manipulation, and interaction, while the Habitat 2.0 environments do not support such kind of low-level control.
             <br /><br />
-            This means MS-HAB is fast enough to support online training and fast evaluation without sacrificing physical realism.
+            This means MS-HAB is fast enough to support online training and efficient, extensive evaluation without sacrificing physical realism.
           </p>
         </div>
       </div>
@@ -252,17 +252,61 @@
 
   <!-- Video Presentation -->
   <section class="hero-content__video-presentation">
-    <div class="container is-max-desktop max-w-[960px]">
+    <div id="dataset-section"class="container is-max-desktop max-w-[960px]">
       <h2 class="video-presentation__title">
         Efficient, Controlled Data Generation at Scale
       </h2>
+      <p class="video-presentation__text" style="padding-bottom: 0;">
+        We develop a rule-based event labeling and trajectory categorization system to filter for specific demonstrations which match predefined criteria for robot behavior and safety. We provide these tools so users can generate data with custom requirements. We use this filtering system to generate a large vision-based robot dataset to train our IL policies.
+      </p>
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <table id="dataset-table">
+          <caption style="margin-bottom: 10px;">2 128x128 RGBD Pixels + State&nbsp;&nbsp;|&nbsp;&nbsp;1000 episodes per target obj/articulation&nbsp;&nbsp;|&nbsp;&nbsp;Event labeling performed on all trajectories</caption>
+          <thead style="border-top: 1px solid rgb(120,120,120); border-bottom: 1px solid rgb(120,120,120);">
+            <tr>
+              <th>Long-Horizon Task</th>
+              <th>Subtasks</th>
+              <th>Episodes</th>
+              <th>Transitions</th>
+              <th>Size</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody style="border-bottom: 1px solid rgb(120,120,120);">
+            <tr>
+              <td>TidyHouse</td>
+              <td>Pick (<span style="color: #FF8318; font-weight: bold;">M</span>*), Place (<span style="color: #FF8318; font-weight: bold;">M</span>~<span style="color: red; font-weight: bold;">H</span>)</td>
+              <td>18K</td>
+              <td>3.6M</td>
+              <td>208.5 GB</td>
+              <td><a href="https://huggingface.co/datasets/arth-shukla/MS-HAB-TidyHouse" target="_blank">Download</a></td>
+            </tr>
+            <tr>
+              <td>PrepareGroceries</td>
+              <td>Pick (<span style="color: red; font-weight: bold;">H</span>), Place (<span style="color: red; font-weight: bold;">H</span>)</td>
+              <td>18K</td>
+              <td>3.6M</td>
+              <td>174.2 GB</td>
+              <td><a href="https://huggingface.co/datasets/arth-shukla/MS-HAB-PrepareGroceries" target="_blank">Download</a></td>
+            </tr>
+            <tr></tr>
+              <td>SetTable</td>
+              <td>Pick (<span style="color: #5A5AFA; font-weight: bold;">E</span>), Place (<span style="color: #5A5AFA; font-weight: bold;">E</span>),<br />Open (<span style="color: #5A5AFA; font-weight: bold;">E</span>), Close (<span style="color: #5A5AFA; font-weight: bold;">E</span>)</td>
+              <td>8K</td>
+              <td>1.6M</td>
+              <td>83.4 GB</td>
+              <td><a href="https://huggingface.co/datasets/arth-shukla/MS-HAB-SetTable" target="_blank">Download</a></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr><td colspan="6">*Approxmate Subtask Difficulty (based on randomizations, receptacles, etc): Easy &mdash; <span style="color: #5A5AFA; font-weight: bold;">E</span>&nbsp;&nbsp;|&nbsp;&nbsp;Medium &mdash; <span style="color: #FF8318; font-weight: bold;">M</span>&nbsp;&nbsp;|&nbsp;&nbsp;Hard &mdash; <span style="color: red; font-weight: bold;">H</span></td></tr>
+          </tfoot>
+        </table>
+      </div>
       <p class="video-presentation__text">
-        We develop a rule-based event labeling and trajectory categorization system to filter for specific demonstrations which match predefined criteria for robot behavior and safety. We provide these tools so users can generate data with custom requirements. We use this filtering system to generate a large vision-based robot dataset to train our IL policies (which we will release soon).
-
-        <br /><br />
-
         Furthermore, we use the trajectory categorization system to group rollouts by success/failure modes. We provide these statistics in the paper appendix to provide the community with clearer insight on avenues for improvement beyond raw success rates.
       </p>
+    </div>
   </section>
   <!-- End  Video Presentation -->
 
@@ -302,11 +346,11 @@
 
             <!-- Dataset link -->
             <span class="link-block">
-              <a href="" class="  ">
+              <a href="#dataset-section" class="  ">
                 <span class="">
                   <img src="static/svg/Icon-data.svg" alt="SVG" width="16px" height="16px">
                 </span>
-                <span>Dataset (TBA)</span>
+                <span>Dataset</span>
                 <!-- TODO (arth): Upload dataset and add link -->
               </a>
             </span>
@@ -324,7 +368,7 @@
   <!--BibTex citation -->
   <section class="section hero-content__bibtex" id="BibTeX">
     <div class="container  is-max-desktop content">
-      <div class="flex justify-center items-center flex-col px-6 pb-20">
+      <div id="citation-div" class="flex justify-center items-center flex-col px-6 pb-20">
         <h1 class="bibtex__citation mb-2">Citation</h1>
         <p class="bibtex__text">
           If you use ManiSkill-HAB in your work, please consider citing the following:

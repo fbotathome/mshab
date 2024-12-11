@@ -43,6 +43,12 @@ body {
   background: #D7DCE7;
 }
 
+#citation-div {
+  @media (max-width: 600px) {
+    padding: 0 !important;
+  }
+}
+
 .hero-title__element{
   padding: 40px;
   .element__conference{
@@ -210,6 +216,69 @@ body {
   }
   video{
     border-radius: 24px;
+  }
+  table {
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px 0;
+    font-family: 'Geist', sans-serif;
+    position: relative;
+  }
+
+  @media (max-width: calc(800px + 40px)) {
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      width: 100vw;
+      position: relative;
+      background-attachment: local, local, scroll, scroll;
+    }
+
+    table caption {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+
+  table thead {
+    font-family: 'PPSupplySans', sans-serif;
+  }
+
+  table th,
+  table td {
+    text-align: center;
+    padding: 8px;
+    vertical-align: middle;
+  }
+
+  table tbody {
+    font-size: 14px;
+    /* font-weight: 84; */
+    line-height: 18px;
+  }
+
+  table a {
+    color: #5A5AFA;
+  }
+
+  table a:hover {
+    text-decoration: underline;
+  }
+
+  table caption,
+  table tfoot tr,
+  table tfoot tr td {
+    font-family: 'Geist', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 84 !important;
+    line-height: 18px !important;
+  }
+
+  table tfoot {
+    text-align: center !important;
   }
 }
 
