@@ -3,6 +3,10 @@
 
 <head>
   <meta charset="utf-8">
+
+  <!-- For Google Search Console verification -->
+  <meta name="google-site-verification" content="8s3vaaMawNZ2FukDgSgywqfaFLWBrKw0YMySKlEAxdI" />
+  
   <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
   <!-- Replace the content tag with appropriate information -->
   <meta name="description" content="ManiSkill-HAB provides a GPU-accelerated implementation of the Home Assistant Benchmark (HAB) which supports realistic low-level control, extensive RL and IL baselines, and a rule-based trajectory filtering system to enable efficient, controlled data generation at scale.">
@@ -158,7 +162,7 @@
       <h2 class=" is-3 hero-abstract__title">Abstract</h2>
       <div class="content  hero-abstract__text">
         <p>
-          High-quality benchmarks are the foundation for embodied AI research, enabling significant advancements in long-horizon navigation, manipulation and rearrangement tasks. However, as frontier tasks in robotics get more advanced, they require faster simulation speed, more intricate test environments, and larger demonstration datasets. To this end, we present MS-HAB, a holistic benchmark for low-level manipulation and in-home object rearrangement. First, we provide a GPU-accelerated implementation of the Home Assistant Benchmark (HAB). We support realistic low-level control and achieve over 3x the speed of previous magical grasp implementations at similar GPU memory usage. Second, we train extensive reinforcement learning (RL) and imitation learning (IL) baselines for future work to compare against. Finally, we develop a rule-based trajectory filtering system to sample specific demonstrations from our RL policies which match predefined criteria for robot behavior and safety. Combining demonstration filtering with our fast environments enables efficient, controlled data generation at scale.
+          High-quality benchmarks are the foundation for embodied AI research, enabling significant advancements in long-horizon navigation, manipulation and rearrangement tasks. However, as frontier tasks in robotics get more advanced, they require faster simulation speed, more intricate test environments, and larger demonstration datasets. To this end, we present MS-HAB, a holistic benchmark for low-level manipulation and in-home object rearrangement. First, we provide a GPU-accelerated implementation of the Home Assistant Benchmark (HAB). We support realistic low-level control and achieve over 3&times; the speed of previous magical grasp implementations at similar GPU memory usage. Second, we train extensive reinforcement learning (RL) and imitation learning (IL) baselines for future work to compare against. Finally, we develop a rule-based trajectory filtering system to sample specific demonstrations from our RL policies which match predefined criteria for robot behavior and safety. Combining demonstration filtering with our fast environments enables efficient, controlled data generation at scale.
         </p>
       </div>
     </div>
@@ -261,7 +265,7 @@
       </p>
       <div style="display: flex; flex-direction: column; align-items: center;">
         <table id="dataset-table">
-          <caption style="margin-bottom: 10px;">2 128x128 RGBD Pixels + State&nbsp;&nbsp;|&nbsp;&nbsp;1000 episodes per target obj/articulation&nbsp;&nbsp;|&nbsp;&nbsp;Event labeling performed on all trajectories</caption>
+          <caption style="margin-bottom: 10px;">2 128&times;128 RGBD Pixels + State&nbsp;&nbsp;|&nbsp;&nbsp;1000 episodes per target obj/articulation&nbsp;&nbsp;|&nbsp;&nbsp;Event labeling performed on all trajectories</caption>
           <thead style="border-top: 1px solid rgb(120,120,120); border-bottom: 1px solid rgb(120,120,120);">
             <tr>
               <th>Long-Horizon Task</th>
