@@ -10,7 +10,7 @@ Official repository for the ManiSkill-HAB project by
 
 [Arth Shukla](https://arth.website/), [Stone Tao](https://stoneztao.com/), [Hao Su](https://cseweb.ucsd.edu/~haosu/)
 
-**[Paper TBA]()** | **[Website](https://arth-shukla.github.io/mshab/)** | **[Models](https://huggingface.co/arth-shukla/mshab_checkpoints)** | **[Dataset](https://arth-shukla.github.io/mshab/#dataset-section)** | **[Supplementary](https://sites.google.com/view/maniskill-hab)**
+**[Paper](https://arxiv.org/abs/2412.13211)** | **[Website](https://arth-shukla.github.io/mshab/)** | **[Models](https://huggingface.co/arth-shukla/mshab_checkpoints)** | **[Dataset](https://arth-shukla.github.io/mshab/#dataset-section)** | **[Supplementary](https://sites.google.com/view/maniskill-hab)**
 
 
 ## Setup and Installation
