@@ -213,6 +213,7 @@ def main():
         with open(OUTPUT_FP, "r") as f:
             ret = json.load(f)
     ret.append(output)
+    os.makedirs(os.path.dirname(OUTPUT_FP), exist_ok=True)
     with open(OUTPUT_FP, "w") as f:
         json.dump(ret, f, indent=4)
     og.shutdown()
