@@ -33,7 +33,7 @@ Official repository for the ManiSkill-HAB project by
     We also host an altered version of the ReplicaCAD dataset necessary for low-level manipulation, which can be downloaded with ManiSkill's download utils. This may take some time:
     ```bash
     # Default installs to ~/.maniskill/data. To change this, add `export MS_ASSET_DIR=[path]`
-    python -m mani_skill.utils.download_asset ycb ReplicaCAD ReplicaCADRearrange
+    for dataset in ycb ReplicaCAD ReplicaCADRearrange; do python -m mani_skill.utils.download_asset "$dataset"; done
     ```
   
     Now the environments can be imported to your script with just one line.
@@ -52,9 +52,9 @@ Official repository for the ManiSkill-HAB project by
 
     # Dataset (see HuggingFace documentation for faster download options depending on your system)
     export MSHAB_DATASET_DIR="$MS_ASSET_DIR/scene_datasets/replica_cad_dataset/rearrange-dataset"
-    huggingface-cli download arth-shukla/MS-HAB-TidyHouse --local-dir "$MSHAB_DATASET_DIR/tidy_house"
-    huggingface-cli download arth-shukla/MS-HAB-PrepareGroceries --local-dir "$MSHAB_DATASET_DIR/prepare_groceries"
-    huggingface-cli download arth-shukla/MS-HAB-SetTable --local-dir "$MSHAB_DATASET_DIR/set_table"
+    huggingface-cli download --repo-type dataset arth-shukla/MS-HAB-TidyHouse --local-dir "$MSHAB_DATASET_DIR/tidy_house"
+    huggingface-cli download --repo-type dataset arth-shukla/MS-HAB-PrepareGroceries --local-dir "$MSHAB_DATASET_DIR/prepare_groceries"
+    huggingface-cli download --repo-type dataset arth-shukla/MS-HAB-SetTable --local-dir "$MSHAB_DATASET_DIR/set_table"
     ```
   
     Users can also generate the data with trajectory filtering by running the provided data generation script `bash scripts/gen_dataset.sh`; this option may be faster depending on connection speed and system bandwidth. Users can use custom trajectory filtering criteria by editing `mshab/utils/label_dataset.py` (e.g. stricter collision requirements, allow failure data for RL, etc).
