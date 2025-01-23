@@ -2,6 +2,8 @@
 
 _A Benchmark for Low-Level Manipulation in Home Rearrangement Tasks_
 
+International Conference on Learning Representations (**ICLR**) 2025
+
 <a href="https://arth-shukla.github.io/mshab/"><img src="./docs/static/images/mshab_banner_fullsize.jpg" width="100%" /></a>
 
 
