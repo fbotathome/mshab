@@ -76,17 +76,14 @@ Official repository for the ManiSkill-HAB project by
     pip install -e .[dev]
     ```
 
-## Usage
-
-### Environments
+## Quickstart
 
 MS-HAB provides an evaluation environment, `SequentialTask-v0` which defines tasks and success/fail conditions. The evaluation environment is ideal for evaluating the HAB's long-horizon tasks.
 
 MS-HAB also provides training environments per subtask `[Name]SubtaskTrain-v0` which add rewards, spawn rejection pipelines, etc (e.g. `PickSubtaskTrain-v0`). Training environments do not support long-horizon tasks (i.e. no skill chaining), however they are ideal for training or evaluating individual skill policies.
 
-Tasks are defined using the `TaskPlan` dataclass (in `mshab/envs/planner.py`). Train environments use precomputed feasible spawn points. `TaskPlan`s and spawn data are installed with `ReplicaCADRearrange` to the directory listed in env var `MS_ASSET_DIR` (defaults to `~/.maniskill/data` if `MS_ASSET_DIR` is empty) (see [Setup and Installation](#setup-and-installation)).
+To get started, you can use the below code to make your environments. Simply set the the `task`, `subtask`, and `split` variables below, add your preferred wrappers (e.g. [ManiSkill wrappers](https://github.com/haosulab/ManiSkill/tree/main/mani_skill/utils/wrappers)), and you're good to go! For more customization, see the [Environment Configs, Implementation Details, and Customization](#environment-configs-implementation-details-and-customization) section.
 
-In this repo, environments are made using code in `mshab/envs/make.py`, including additional useful wrappers. Below we provide an example for making a training environment for TidyHouse Pick on the train split.
 ```python
 import gymnasium as gym
 
@@ -97,11 +94,14 @@ import mshab.envs
 from mshab.envs.planner import plan_data_from_file
 
 
-REARRANGE_DIR = ASSET_DIR / "scene_datasets/replica_cad_dataset/rearrange"
+task = "tidy_house" # "tidy_house", "prepare_groceries", or "set_table"
+subtask = "pick"    # "sequential", "pick", "place", "open", "close"
+                    # NOTE: sequential loads the full task, e.g pick -> place -> ...
+                    #     while pick, place, etc only simulate a single subtask each episode
+split = "train"     # "train", "val"
 
-task = "tidy_house"
-subtask = "pick"
-split = "train"
+
+REARRANGE_DIR = ASSET_DIR / "scene_datasets/replica_cad_dataset/rearrange"
 
 plan_data = plan_data_from_file(
     REARRANGE_DIR / "task_plans" / task / subtask / split / "all.json"
@@ -134,14 +134,55 @@ env = gym.make(
 
 venv = ManiSkillVectorEnv(
     env,
-    max_episode_steps=1000,
+    max_episode_steps=1000,  # set manually based on task
     ignore_terminations=True,  # set to False for partial resets
 )
 
 # add vector env wrappers here
+
+obs, info = venv.reset()
 ```
 
-### Training
+## Environment Configs, Implementation Details, and Customization
+
+### Scenes, Task Plans, etc
+
+For simplicity, we use the following nomenclature:
+- **Environments** are our `SequentialTask-v0` and `[Name]SubtaskTrain-v0` environments
+- **Scenes** are the core apartment scenes from the ReplicaCAD dataset
+- **Task Plans** are predefined sequences of subtasks (e.g. Pick &rarr; Place &rarr; ... ) with details on target objects/articulations, goal positions, etc
+- **Spawn Data** is a precomputed list of spawn states for the robot and objects, i.e. defines the intial state distribution of the environment. These are needed since online spawn rejection pipelines (i.e. rejecting invalid spawns which contain collisions) are unstable on GPU simulation
+
+ReplicaCAD contains 84 apartment scenes with randomized layout and furniture, with 63 allocated to the train split and 21 in the validation split. Furthermore, the Home Assistant Benchmark (HAB) randomizes different YCB objects throughout the scene. For each long-horizon task (TidyHouse, PrepareGroceries, SetTable), the HAB provides 10,000 task plans for the train split and 1000 for the validation split. For each long-horizon task, each task plan has the same order of subtasks, but randomizes target objects/articulations and goal positions.
+
+The `SequentialTask-v0` environment can load one long-horizon task at a time. Each episode, the environment samples a batch of task plans (each task plan has the same order by definition), and simulates them in parallel. This environment provides subtask success/fail conditions, but spawn rejection and rewards are not supported.
+
+The `[Name]SubtaskTrain-v0` environments load a single subtask (Pick, Place, Open, Close) at a time. These environemnts use precomputed spawn locations for spawn rejection, and each environment defines its own dense (and normalized dense) rewards. Some training environments have additonal options which are necessary for training successful policies (e.g. `OpenSubtaskTrain-v0` has an option to randomly open the articulation 10% of the way, which is necessary to train the Open Drawer policy with online RL).
+
+### Implementation Details
+
+MS-HAB uses dataclasses defined in `mshab/envs/planner.py` to store environment configs, task plans, etc.
+- `TaskPlan` contains a list of `[Name]Subtask` to define the subtask sequence, as well as which ReplicaCAD scene and YCB objects must be built
+- Each subtask is defined with `[Name]Subtask`, which contains information about target objects/articulations, goal positions, handle positions, etc
+- Success and failure conditions for each subtask are defined by `[Name]SubtaskConfig`, which contains settings for each subtask like collision force limits, place/open/close thresholds, etc
+
+Each episode, a new task plan is sampled by the environment. The HAB task plans are saved as json files under `$MS_ASSET_DIR/scene_datasets/replica_cad_dataset/rearrange/`.
+
+`[Name]SubtaskConfig`s can be passed to the environment in the `gym.make` as `task_cfgs=dict(pick=dict(...), place=dict(...), ...)` to tweak thresholds, goal types, etc for success/fail conditions.
+
+### Simple Customization
+
+- Tasks can be simplified by passing fewer task plans to the environment. For example, if a method is failing on the full TidyHouse tasks with all task plans, one can instead pass a single task plan for debugging and testing on a single sequence of subtasks
+- Success/fail conditions can be tweaked by passing `task_cfgs` to the environment. For example, while the default Place subtask uses a sphere goal of radius 15cm, one can pass `gym.make(..., task_cfgs=dict(place=dict(goal_type="zone")))`, which allows objects to be placed in the full receptacle.
+
+### Advanced Customization
+
+- Tasks can be made longer/more complicated by using longer subtask sequences. However, the subtasks should be logically ordered
+  - For example, the sequence "Pick &rarr; Pick" is not feasible, since the first object will still be grasped when the second Pick subtask begins. However, "Pick &rarr; Place &rarr; Pick" is feasible
+  - The default spawn data downloaded in [Setup and Installation](#setup-and-installation) are generated for existing subtasks. If exisitng subtasks are reused for new task plans, then the spawn data can also be reused. If new subtasks are created, then new spawn data will need to be generated via the scripts in `mshab/utils/gen/`
+- To change the split of ReplicaCAD scenes or which YCB objects are spawned, the original HAB configs need to be changed and loaded appropriately using the ManiSkill `SceneBuilder` API. As implementation can change depending on use case, please create a [GitHub Issue](https://github.com/arth-shukla/mshab/issues) if support is needed!
+
+## Training
 
 To run SAC, PPO, BC and Diffusion Policy training with default hyperparameters, you can run
 
@@ -185,7 +226,7 @@ python -m mshab.train_[algo] \
 
 Note that resuming training for SAC is less straightforward than other algorithms since it fills a replay buffer with samples collected during online training. However, setting `algo.init_steps=200_000` to partially refill the replay buffer can give decent results. Your mileage may vary.
 
-### Evaluation
+## Evaluation
 
 Note that BC and DP need a dataset to be downloaded or generated first. Evaluation using the provided checkpoints for the long-horizon tasks (with teleport nav) or individual subtasks can be done with 
 ```bash
