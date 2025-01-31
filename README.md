@@ -53,6 +53,7 @@ Official repository for the ManiSkill-HAB project by
     huggingface-cli download arth-shukla/mshab_checkpoints --local-dir mshab_checkpoints
 
     # Dataset (see HuggingFace documentation for faster download options depending on your system)
+    export MS_ASSET_DIR="~/.maniskill/data" # change to your preferred path (if changed, ideally add to .bashrc)
     export MSHAB_DATASET_DIR="$MS_ASSET_DIR/scene_datasets/replica_cad_dataset/rearrange-dataset"
     huggingface-cli download --repo-type dataset arth-shukla/MS-HAB-TidyHouse --local-dir "$MSHAB_DATASET_DIR/tidy_house"
     huggingface-cli download --repo-type dataset arth-shukla/MS-HAB-PrepareGroceries --local-dir "$MSHAB_DATASET_DIR/prepare_groceries"
@@ -83,7 +84,7 @@ MS-HAB provides an evaluation environment, `SequentialTask-v0` which defines tas
 
 MS-HAB also provides training environments per subtask `[Name]SubtaskTrain-v0` which add rewards, spawn rejection pipelines, etc (e.g. `PickSubtaskTrain-v0`). Training environments do not support long-horizon tasks (i.e. no skill chaining), however they are ideal for training or evaluating individual skill policies.
 
-Tasks are defined using the `TaskPlan` dataclass (in `mshab/envs/planner.py`). Train environments use precomputed feasible spawn points. `TaskPlan`s and spawn data are installed with `ReplicaCADRearrange` to the directory listed in env var `MS_ASSET_DIR` (defaults to `~/.maniskill/data`) (see [Setup and Installation](#setup-and-installation)).
+Tasks are defined using the `TaskPlan` dataclass (in `mshab/envs/planner.py`). Train environments use precomputed feasible spawn points. `TaskPlan`s and spawn data are installed with `ReplicaCADRearrange` to the directory listed in env var `MS_ASSET_DIR` (defaults to `~/.maniskill/data` if `MS_ASSET_DIR` is empty) (see [Setup and Installation](#setup-and-installation)).
 
 In this repo, environments are made using code in `mshab/envs/make.py`, including additional useful wrappers. Below we provide an example for making a training environment for TidyHouse Pick on the train split.
 ```python
