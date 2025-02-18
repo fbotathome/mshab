@@ -16,7 +16,10 @@ EXP_NAME="$ENV_ID/$GROUP/sac-$SUBTASK-$OBJ-local"
 PROJECT_NAME="MS-HAB-RCAD-$(echo $SUBTASK | sed 's/\b\(.\)/\u\1/g')-$TASK-sac"
 
 WANDB=False
-MS_ASSET_DIR="$HOME/.maniskill/data"
+# NOTE (arth): tensorboard=False since there seems to be an issue with tensorboardX crashing on very long runs
+if [[ -z "${MS_ASSET_DIR}" ]]; then
+    MS_ASSET_DIR="$HOME/.maniskill/data"
+fi
 
 
 SAPIEN_NO_DISPLAY=1 python -m mshab.train_sac configs/sac_pick.yml \

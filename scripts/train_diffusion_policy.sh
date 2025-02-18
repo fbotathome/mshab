@@ -22,7 +22,9 @@ PROJECT_NAME="MS-HAB-RCAD-dp"
 
 WANDB=False
 TENSORBOARD=True
-MS_ASSET_DIR="$HOME/.maniskill/data"
+if [[ -z "${MS_ASSET_DIR}" ]]; then
+    MS_ASSET_DIR="$HOME/.maniskill/data"
+fi
 
 RESUME_LOGDIR="$WORKSPACE/$EXP_NAME"
 RESUME_CONFIG="$RESUME_LOGDIR/config.yml"

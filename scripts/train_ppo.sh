@@ -15,9 +15,11 @@ EXP_NAME="$ENV_ID/$GROUP/ppo-$SUBTASK-$OBJ-local"
 # shellcheck disable=SC2001
 PROJECT_NAME="MS-HAB-RCAD-$(echo $SUBTASK | sed 's/\b\(.\)/\u\1/g')-$TASK-ppo"
 
-WANDB=True
+WANDB=False
 TENSORBOARD=True
-MS_ASSET_DIR="$HOME/.maniskill/data"
+if [[ -z "${MS_ASSET_DIR}" ]]; then
+    MS_ASSET_DIR="$HOME/.maniskill/data"
+fi
 
 resume_logdir="$WORKSPACE/$EXP_NAME"
 resume_config="$resume_logdir/config.yml"

@@ -18,9 +18,11 @@ EXP_NAME="$ENV_ID/$GROUP/bc-$SUBTASK-$OBJ-local-trajs_per_obj=$TRAJS_PER_OBJ"
 # shellcheck disable=SC2001
 PROJECT_NAME="MS-HAB-RCAD-bc"
 
-WANDB=True
+WANDB=False
 TENSORBOARD=True
-MS_ASSET_DIR="$HOME/.maniskill/data"
+if [[ -z "${MS_ASSET_DIR}" ]]; then
+    MS_ASSET_DIR="$HOME/.maniskill/data"
+fi
 
 RESUME_LOGDIR="$WORKSPACE/$EXP_NAME"
 RESUME_CONFIG="$RESUME_LOGDIR/config.yml"

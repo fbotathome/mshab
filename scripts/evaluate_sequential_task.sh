@@ -29,7 +29,10 @@ GROUP=eval_seq_task-rcad-$TASK-$SUBTASK
 EXP_NAME="eval_seq_task/$TASK/$SUBTASK/$SPLIT/$OBJ/$policy_type"
 # shellcheck disable=SC2001
 PROJECT_NAME="MS-HAB-RCAD-$(echo $SUBTASK | sed 's/\b\(.\)/\u\1/g')-$TASK-sac"
-MS_ASSET_DIR="$HOME/.maniskill/data"
+if [[ -z "${MS_ASSET_DIR}" ]]; then
+    MS_ASSET_DIR="$HOME/.maniskill/data"
+fi
+
 
 WANDB=False
 TENSORBOARD=True

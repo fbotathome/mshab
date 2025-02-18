@@ -21,7 +21,7 @@ Official repository for the ManiSkill-HAB project by
 
    First, set up a conda environment.
     ```bash
-    conda create -n mshab python=3.9
+    conda create -n mshab python=3.9 # python>=3.9 are all supported
     conda activate mshab
     ```
   
@@ -121,7 +121,7 @@ env = gym.make(
     render_mode="rgb_array",
     shader_dir="minimal",
     # TimeLimit args
-    max_episode_steps=1000,
+    max_episode_steps=200,
     # SequentialTask args
     task_plans=plan_data.plans,
     scene_builder_cls=plan_data.dataset,
