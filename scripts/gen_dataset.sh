@@ -3,11 +3,11 @@
 # shellcheck disable=SC2045
 
 if [[ -z "${MS_ASSET_DIR}" ]]; then
-    MS_ASSET_DIR="$HOME/.maniskill/data"
+    MS_ASSET_DIR="$HOME/.maniskill"
 fi
 
-if [[ -f "$MS_ASSET_DIR/mshab_checkpoints" ]]; then
-    CKPT_DIR="$MS_ASSET_DIR/mshab_checkpoints"
+if [[ -f "$MS_ASSET_DIR/data/mshab_checkpoints" ]]; then
+    CKPT_DIR="$MS_ASSET_DIR/data/mshab_checkpoints"
 else
     CKPT_DIR="mshab_checkpoints"
 fi
