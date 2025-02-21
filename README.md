@@ -16,7 +16,9 @@ Official repository for the ManiSkill-HAB project by
 
 ## Updates
 
-- 20-02-2025: ManiSkill-HAB has been updated to support ManiSkill3 Beta 18. To update, please either remove and re-clone the `mshab` branch in ManiSkill3, or pull the latest changes from the `mshab` branch in ManiSkill3. Then, `pip install -e ManiSkill` again.
+- 20-02-2025: ManiSkill-HAB has been updated to support ManiSkill3 Beta 18, resulting in **60% less memory usage**!
+   - In particular, for the benchmark in Fig. 2 of the paper, MS-HAB on Beta 18 uses only ~9.68GB vram, compared to nearly 24GB previously.
+   - To update, please either remove and re-clone the `mshab` branch in ManiSkill3, or pull the latest changes from the `mshab` branch in ManiSkill3. Then, `pip install -e ManiSkill` again.
 
 ## Setup and Installation
 
