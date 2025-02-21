@@ -77,7 +77,7 @@ def make_interact_env():
         num_envs=args.num_envs,
         obs_mode="rgbd",
         reward_mode="normalized_dense",
-        control_mode="pd_joint_delta_pos_body_pos",
+        control_mode="pd_joint_delta_pos_stiff_body",
         render_mode="all",
         shader_dir="minimal",
         robot_uids="fetch",

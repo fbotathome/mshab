@@ -13,7 +13,11 @@ import sapien
 import sapien.physx as physx
 
 from mani_skill import ASSET_DIR
-from mani_skill.agents.robots.fetch import FETCH_BASE_COLLISION_BIT, FETCH_WHEELS_COLLISION_BIT, Fetch
+from mani_skill.agents.robots.fetch import (
+    FETCH_BASE_COLLISION_BIT,
+    FETCH_WHEELS_COLLISION_BIT,
+    Fetch,
+)
 from mani_skill.utils.building import actors
 from mani_skill.utils.scene_builder import SceneBuilder
 from mani_skill.utils.structs import Actor, Articulation
@@ -23,6 +27,10 @@ IGNORE_FETCH_COLLISION_STRS = ["mat", "rug", "carpet"]
 
 
 class ReplicaCADInteractSceneBuilder(SceneBuilder):
+    robot_initial_pose = sapien.Pose(
+        p=[-1, 0, 0.02]
+    )  # generally a safe initial spawn pose for the Fetch robot
+
     # interact uses ReplicaCAD w/ baked lighting
     builds_lighting = False
 
@@ -96,8 +104,10 @@ class ReplicaCADInteractSceneBuilder(SceneBuilder):
             urdf_loader.disable_self_collisions = True
             if "uniform_scale" in articulated_meta:
                 urdf_loader.scale = articulated_meta["uniform_scale"]
-            articulation = urdf_loader.load(urdf_path)
+            builder = urdf_loader.parse(urdf_path)["articulation_builders"][0]
             pose = sapien.Pose(q=q) * sapien.Pose(pos, rot)
+            builder.initial_pose = pose
+            articulation = builder.build()
             self._default_object_poses.append((articulation, pose))
 
             self.articulations[articulation_name] = articulation
@@ -119,6 +129,7 @@ class ReplicaCADInteractSceneBuilder(SceneBuilder):
 
             obj_instance_name = f"{actor_id}-{actor_id_to_num_made[actor_id]}"
             builder = actors.get_actor_builder(self.scene, id=f"ycb:{actor_id}")
+            builder.initial_pose = pose
             actor = builder.build(name=obj_instance_name)
 
             self._default_object_poses.append((actor, pose))
