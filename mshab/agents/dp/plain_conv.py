@@ -65,4 +65,7 @@ class PlainConv(nn.Module):
                     nn.init.zeros_(module.bias)
 
     def forward(self, image):
-        return self.extractor(image)
+        enc = self.cnn(image)
+        if self.pool is not None:
+            enc = self.pool(enc)
+        return self.fc(enc.flatten(1))
