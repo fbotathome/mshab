@@ -103,7 +103,7 @@ def make_env(
         control_mode="pd_joint_delta_pos",
         render_mode=env_cfg.render_mode,
         shader_dir=env_cfg.shader_dir,
-        robot_uids="fetch",
+        robot_uids="boris",
         num_envs=env_cfg.num_envs,
         sim_backend="gpu",
         **env_cfg.env_kwargs,
